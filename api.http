@@ -31,6 +31,14 @@ GET http://localhost:3333/attendees/2/check-in
 
 ###
 
-GET http://localhost:3333/events/8780bb3f-ca0b-4539-9cf6-e361fde0622e/attendees
+GET http://localhost:3333/events/0e349644-78f8-45c7-8481-d740d35a9c44/attendees
 
 //?query=carlos
+
+###
+
+GET http://localhost:3333/events
+
+###
+
+GET http://localhost:3333/events/0e349644-78f8-45c7-8481-d740d35a9c44

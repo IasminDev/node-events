@@ -15,10 +15,20 @@ async function seed() {
             maximumAttendees: 120,
         }
     })
+    const eventId2 = '43ba1fd8-a3c2-4272-ae66-42dfcf0d6a9c'
+    await prisma.event.create({
+        data: {
+            id: eventId2,
+            title: "Event Summit",
+            slug: "event-summit",
+            details: "Second event for lovers of programming",
+            maximumAttendees: 10,
+        }
+    })
 
     const attendeesToInsert: Prisma.AttendeeUncheckedCreateInput[] = []
 
-    for (let i = 0; i <= 120; i++) {
+    for (let i = 0; i < 120; i++) {
         attendeesToInsert.push({
             id: 10000 + i,
             name: faker.person.fullName(),
