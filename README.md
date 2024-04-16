@@ -51,3 +51,21 @@ The system will scan the participant's credential to allow entry into the event.
 // 30x - redirecionamento
 // 40x - erro do client
 // 50x - erro do servidor
+
+Instalacoes>>
+
+npm install
+
+npm i fastify
+npm i fastify-type-provider-zod
+npm i zod
+npm i dayjs
+npm i prisma -D
+npm i @types/node -D
+npm i @faker-js/faker -D
+npm i tsup -D
+npm i tsx -D
+npm i typescript -D
+npm i @prisma/client@latest
+
+.env >> DATABASE_URL="file:./dev.db"
