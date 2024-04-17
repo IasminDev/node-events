@@ -27,7 +27,7 @@ GET http://localhost:3333/attendees/2/badge
 
 ###
 
-GET http://localhost:3333/attendees/2/check-in
+GET http://localhost:3333/attendees/10024/check-in
 
 ###
 
