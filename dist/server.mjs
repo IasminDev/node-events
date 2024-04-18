@@ -1,6 +1,16 @@
 import {
+  getEvents
+} from "./chunk-IHOK3UIN.mjs";
+import {
+  createEvent
+} from "./chunk-QLGKTO5H.mjs";
+import {
   registerForEvent
-} from "./chunk-7A7Y224Q.mjs";
+} from "./chunk-25H3MUMX.mjs";
+import {
+  updateAttendeeData
+} from "./chunk-CWOLMHK7.mjs";
+import "./chunk-KDMJHR3Z.mjs";
 import {
   errorHandler
 } from "./chunk-VDC5B7VK.mjs";
@@ -8,12 +18,11 @@ import {
   checkIn
 } from "./chunk-CXRWONHO.mjs";
 import {
-  createEvent
-} from "./chunk-PAMGMZFR.mjs";
-import "./chunk-KDMJHR3Z.mjs";
-import {
   getAttendeeBadge
 } from "./chunk-52DC6QCP.mjs";
+import {
+  getAttendeeData
+} from "./chunk-CIWA63KN.mjs";
 import {
   getEventAttendees
 } from "./chunk-D6I2UMA4.mjs";
@@ -54,9 +63,12 @@ app.setSerializerCompiler(serializerCompiler);
 app.register(createEvent);
 app.register(registerForEvent);
 app.register(getEvent);
+app.register(getEvents);
 app.register(getAttendeeBadge);
 app.register(checkIn);
 app.register(getEventAttendees);
+app.register(getAttendeeData);
+app.register(updateAttendeeData);
 app.setErrorHandler(errorHandler);
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running");

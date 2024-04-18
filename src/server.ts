@@ -3,17 +3,20 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUI from "@fastify/swagger-ui";
 import fastifyCors from "@fastify/cors";
 import { serializerCompiler, validatorCompiler, jsonSchemaTransform } from "fastify-type-provider-zod";
+import { errorHandler } from "./error-handler";
 import { createEvent } from "./routes/post-create-event";
 import { registerForEvent } from "./routes/post-register-for-event";
 import { getEvent } from "./routes/get-event";
+import { getEventAttendees } from "./routes/get-event-attendees";
+import { getEvents } from "./routes/get-events";
+import { updateEventData } from "./routes/put-event-data";
+import { getAttendeeData } from "./routes/get-attendee-data";
+import { updateAttendeeData } from "./routes/put-attendee-data";
+
 import { getAttendeeBadge } from "./routes/get-attendee-badge";
 import { checkIn } from "./routes/check-in";
-import { getEventAttendees } from "./routes/get-event-attendees";
-import { errorHandler } from "./error-handler";
-import { getEvents } from "./routes/get-events";
 
 const app = fastify()
-
 app.register(fastifyCors, {
     origin: '*',
     //apenas para desenvolvimento fica assim -  deveria ser com 'http://meufrontend.com'
@@ -46,6 +49,9 @@ app.register(getEvents)
 app.register(getAttendeeBadge)
 app.register(checkIn)
 app.register(getEventAttendees)
+app.register(getAttendeeData)
+app.register(updateAttendeeData)
+app.register(updateEventData)
 
 app.setErrorHandler(errorHandler)
 
