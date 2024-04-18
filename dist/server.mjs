@@ -10,6 +10,9 @@ import {
 import {
   updateAttendeeData
 } from "./chunk-CWOLMHK7.mjs";
+import {
+  updateEventData
+} from "./chunk-A7EFGW4Y.mjs";
 import "./chunk-KDMJHR3Z.mjs";
 import {
   errorHandler
@@ -69,6 +72,7 @@ app.register(checkIn);
 app.register(getEventAttendees);
 app.register(getAttendeeData);
 app.register(updateAttendeeData);
+app.register(updateEventData);
 app.setErrorHandler(errorHandler);
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running");
