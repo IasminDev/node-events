@@ -9,7 +9,7 @@ import {
 } from "./chunk-25H3MUMX.mjs";
 import {
   updateAttendeeData
-} from "./chunk-CWOLMHK7.mjs";
+} from "./chunk-JERVY6NS.mjs";
 import {
   updateEventData
 } from "./chunk-A7EFGW4Y.mjs";

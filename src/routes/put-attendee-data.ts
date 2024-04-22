@@ -17,26 +17,21 @@ export async function updateAttendeeData(app: FastifyInstance) {
                 }),
                 body: z.object({
                     name: z.string().min(4).optional(),
-                    email: z.string().email().optional(),
-                    createdAt: z.date().optional()
+                    email: z.string().email().optional()
                 }).partial(),
                 responses: {
                     200: z.object({
                         attendee: z.object({
                             id: z.number(),
                             name: z.string(),
-                            email: z.string().email(),
-                            createdAt: z.date()
+                            email: z.string().email()
                         })
-                    }),
-                    404: z.object({
-                        message: z.string(),
                     }),
                 },
             }
         }, async (request, reply) => {
             const { eventId, attendeeId } = request.params;
-            const { name, email, createdAt } = request.body;
+            const { name, email } = request.body;
 
             const attendee = await prisma.attendee.findUnique({
                 where: {
@@ -55,8 +50,7 @@ export async function updateAttendeeData(app: FastifyInstance) {
                 },
                 data: {
                     name: name ?? attendee.name,
-                    email: email ?? attendee.email,
-                    createdAt: createdAt ?? attendee.createdAt
+                    email: email ?? attendee.email
                 },
             });
 
