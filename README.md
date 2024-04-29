@@ -32,6 +32,7 @@ The system will scan the participant's credential to allow entry into the event.
 // Anotacoes
 
     // npx prisma db seed - para enviar dados do seed para db
+    // npx prisma generate - muda banco de dados apos alteracoes
     
 // Metodo HTTP: 
 // GET(retornar dados), 
