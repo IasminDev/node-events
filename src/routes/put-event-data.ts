@@ -1,60 +1,60 @@
 import { FastifyInstance } from "fastify"
-// import { ZodTypeProvider } from "fastify-type-provider-zod"
-// import { z } from "zod"
-// import { prisma } from "../lib/prisma"
-// import { BadRequest } from "./_errors/bad-request"
+import { ZodTypeProvider } from "fastify-type-provider-zod"
+import { z } from "zod"
+import { prisma } from "../lib/prisma"
+import { BadRequest } from "./_errors/bad-request"
 
 export async function updateEventData(app: FastifyInstance) {
-    // app
-    //     .withTypeProvider<ZodTypeProvider>()
-    //     .put('/events/:eventId', {
-    //         schema: {
-    //             summary: "Create an event",
-    //             tags: ['events'],
-    //             params: z.object({
-    //                 eventId: z.string().uuid(),
-    //             }),
-    //             responses: {
-    //                 200: z.object({
-    //                     event: z.object({
-    //                         id: z.string().uuid(),
-    //                         title: z.string(),
-    //                         slug: z.string(),
-    //                         details: z.string().nullable(),
-    //                         maximumAttendees: z.number().int().nullable(),
-    //                     })
-    //                 })
-    //             },
-    //         },
-    //     }, async (request, reply) => {
-    //         const {
-    //             title,
-    //             details,
-    //             maximumAttendees,
-    //         } = request.body
+    app
+        .withTypeProvider<ZodTypeProvider>()
+        .put('/events/:eventId', {
+            schema: {
+                summary: "Update an event",
+                tags: ['events'],
+                params: z.object({
+                    eventId: z.string().uuid(),
+                }),
+                body: z.object({
+                    title: z.string().optional(),
+                    details: z.string().optional(),
+                    maximumAttendees: z.number().optional()
+                }).partial(),
+                responses: {
+                    200: z.object({
+                        event: z.object({
+                            id: z.string().uuid(),
+                            title: z.string(),
+                            details: z.string().nullable(),
+                            maximumAttendees: z.number().int().nullable(),
+                        })
+                    })
+                },
+            }
+        }, async (request, reply) => {
+            const { eventId } = request.params;
+            const { title, details, maximumAttendees } = request.body
 
-    //         const slug = generateSlug(title)
+            const event = await prisma.event.findUnique({
+                where: {
+                    id: eventId,
+                },
+            })
 
-    //         const eventWithSameSlug = await prisma.event.findUnique({
-    //             where: {
-    //                 slug,
-    //             }
-    //         })
+            if (!event) {
+                throw new BadRequest('Event not found.');
+            }
 
-    //         if (eventWithSameSlug !== null) {
-    //             throw new BadRequest('Another event with same title already exists.')
-    //         }
+            const updatedEvent = await prisma.event.update({
+                where: {
+                    id: eventId,
+                },
+                data: {
+                    title: title ?? event.title,
+                    details: details ?? event.details,
+                    maximumAttendees: maximumAttendees ?? event.maximumAttendees
+                },
+            })
 
-    //         const event = await prisma.event.create({
-    //             data: {
-    //                 title,
-    //                 details,
-    //                 maximumAttendees,
-    //                 slug,
-    //             },
-    //         })
-
-    //         // return { eventId: event.id}
-    //         return reply.status(201).send({ eventId: event.id })
-    // })
+            return reply.send({ event: updatedEvent })
+        })
 }

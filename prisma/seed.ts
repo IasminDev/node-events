@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 
 async function seed() {
     const eventId = '0e349644-78f8-45c7-8481-d740d35a9c44'
-    await prisma.event.deleteMany()
+    // await prisma.event.deleteMany()
     await prisma.event.create({
         data: {
             id: eventId,
