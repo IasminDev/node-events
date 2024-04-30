@@ -15,10 +15,12 @@ import { updateAttendeeData } from "./routes/put-attendee-data";
 
 import { getAttendeeBadge } from "./routes/get-attendee-badge";
 import { checkIn } from "./routes/check-in";
+import { deleteAttendee } from "./routes/delete-attendee";
+import { deleteEvent } from "./routes/delete-event";
 
 const app = fastify()
 app.register(fastifyCors, {
-    origin: '*',
+    origin: 'http://localhost:3333',
     //apenas para desenvolvimento fica assim -  deveria ser com 'http://meufrontend.com'
 })
 
@@ -52,6 +54,8 @@ app.register(getEventAttendees)
 app.register(getAttendeeData)
 app.register(updateAttendeeData)
 app.register(updateEventData)
+app.register(deleteAttendee)
+app.register(deleteEvent)
 
 app.setErrorHandler(errorHandler)
 

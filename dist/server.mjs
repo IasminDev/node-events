@@ -27,6 +27,12 @@ import {
   checkIn
 } from "./chunk-CXRWONHO.mjs";
 import {
+  deleteAttendee
+} from "./chunk-H5VMEMQM.mjs";
+import {
+  deleteEvent
+} from "./chunk-XYUG3YBZ.mjs";
+import {
   getAttendeeBadge
 } from "./chunk-52DC6QCP.mjs";
 import {
@@ -43,7 +49,7 @@ import fastifyCors from "@fastify/cors";
 import { serializerCompiler, validatorCompiler, jsonSchemaTransform } from "fastify-type-provider-zod";
 var app = fastify();
 app.register(fastifyCors, {
-  origin: "*"
+  origin: "http://localhost:3333"
   //apenas para desenvolvimento fica assim -  deveria ser com 'http://meufrontend.com'
 });
 app.register(fastifySwagger, {
@@ -73,6 +79,8 @@ app.register(getEventAttendees);
 app.register(getAttendeeData);
 app.register(updateAttendeeData);
 app.register(updateEventData);
+app.register(deleteAttendee);
+app.register(deleteEvent);
 app.setErrorHandler(errorHandler);
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP server running");

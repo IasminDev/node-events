@@ -6,44 +6,41 @@ import { BadRequest } from "./_errors/bad-request";
 
 export async function deleteAttendee(app: FastifyInstance) {
     app
-    .withTypeProvider<ZodTypeProvider>()
-    .delete('/events/:eventId/attendees/:attendeeId',{
-        schema: {
-            summary: "Delete attendee",
-            tags: ['attendee'],
-            params: z.object({
-                eventId: z.string().uuid(),
-                attendeeId: z.coerce.number().int(),
-            }),
-            responses:{
-                204: {
-                    description: 'Attendee deleted successfully'
+        .withTypeProvider<ZodTypeProvider>()
+        .delete('/events/:eventId/attendees/:attendeeId', {
+            schema: {
+                summary: "Delete attendee",
+                tags: ['attendee'],
+                params: z.object({
+                    eventId: z.string().uuid(),
+                    attendeeId: z.coerce.number().int(),
+                }),
+                responses: {
+                    204: z.object({
+                        description: z.string(),
+                    })
                 },
-                404:{
-                    description: 'Attendee not found'
+            }
+        }, async (request, reply) => {
+            const { eventId, attendeeId } = request.params
+
+            const attendee = await prisma.attendee.findUnique({
+                where: {
+                    eventId: eventId,
+                    id: attendeeId,
                 }
-            },
-        }
-    }, async (request, reply) => {
-        const { eventId, attendeeId } = request.params
+            });
 
-        const attendee = await prisma.attendee.findUnique({
-            where: {
-                eventId: eventId,
-                id: attendeeId,
+            if (attendee === null) {
+                throw new BadRequest('Attendee not found.')
             }
+
+            await prisma.attendee.delete({
+                where: {
+                    id: attendeeId,
+                }
+            });
+
+            reply.code(204).send({ description: 'Attendee deleted successfully' });
         });
-
-        if (attendee === null) {
-            throw new BadRequest('Attendee not found.')
-        }
-
-        await prisma.attendee.delete({
-            where: {
-                id: attendeeId,
-            }
-          });
-
-          reply.code(204).send();
-    });
 }
